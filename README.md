@@ -56,5 +56,4 @@ https://github.com/vinamra22/JOB-SHALA
 ## Team Size : 4
 
 ## Link to website 
-
-https://jobshala.herokuapp.com/
+https://job-shala.onrender.com/
