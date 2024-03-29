@@ -53,12 +53,18 @@ module.exports.createjob  = async (req,res,next) => {
 module.exports.showJob = async(req,res)=>{
     const {id} = req.params;
     const job = await Job.findById(id)
- 
+    const user = req.user;
+
+    if(!user){
+        req.flash('error','You need to login first');
+        return res.redirect('/login');
+    }
     if(!job){
         req.flash('error','Cannot find that job!');
         return res.redirect('/jobs'); //Necessary to redirect
     }
-    res.render('jobs/jobpage',{job});
+    console.log(req.user);
+    res.render('jobs/jobpage',{job,user});
 };
 
 module.exports.deleteJob = async(req,res)=>{
@@ -90,7 +96,7 @@ module.exports.updateJob = async(req,res)=>{
 
 exports.getAllJobs = (async (req, res, next) => {
     let resultperpage=4;
-    
+
     console.log("Query: ", req.query);
 
     let features=new Features(Job.find(), req.query)
@@ -98,6 +104,7 @@ exports.getAllJobs = (async (req, res, next) => {
     .filter()
 
     let jobs = await features.query;
+    console.log(jobs)
 
     let sze=jobs.length;
     
@@ -122,20 +129,42 @@ exports.getAllJobs = (async (req, res, next) => {
 
 
 exports.Applyjob = async (req,res,next) =>{
-        
         const user = await User.findById(req.user._id);
         const Jobfind = await Job.findById(req.params.id);
-        
         for(var i = 0; i < user.Jobapplication.length; i++)
         {
-            console.log(user.Jobapplication[i].toString());
+            // console.log(user.Jobapplication[i].toString());
             if(user.Jobapplication[i]._id.toString() === req.params.id)
             {
                 req.flash('error','You have already applied for this job');
                 return res.redirect('/jobs');
             }
         }
-        Jobfind.Applicants.push(user);      
+        if(req.files.length > 0){
+            const resume = req.files[0];
+            const filename = req.files[0].originalname;
+            const url = req.files[0].path;
+            const newApplicant = {
+                user : user,
+                resume : {filename : filename, url : url}
+            }
+            Jobfind.Applicants.push(newApplicant);      
+        }
+        else if(req.body.resume !== 'Select'){
+           const resumeDetails = req.body.resume;
+           const[filename,url] = resumeDetails.split('|');
+           const newApplicant = {
+               user : user,
+               resume : {filename : filename, url : url}
+            }
+        Jobfind.Applicants.push(newApplicant); 
+        }
+        else{
+            const {id} = req.params;
+            const job = await Job.findById(id);
+            req.flash('error','Please choose or upload a resume');
+            return res.redirect(`/jobs/${job._id}`)
+        }
         console.log(Jobfind);
         user.Jobapplication.push(Jobfind);
         await user.save();

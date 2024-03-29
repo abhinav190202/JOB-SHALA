@@ -1,5 +1,19 @@
 const mongoose = require('mongoose');
 
+const applicantSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    resume: {
+        type: {
+            url: String,
+            filename: String
+        },
+        required: true
+    }
+});
+
 const InternshipSchema = mongoose.Schema({
     Name : {
         type : String,
@@ -53,12 +67,7 @@ const InternshipSchema = mongoose.Schema({
         ref : 'User',
     },
 
-    Applicants : [
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'User'
-        }
-    ],
+    Applicants : [applicantSchema],
 
     Descriptions : {
         type :String,

@@ -59,4 +59,9 @@ submit1.addEventListener('click',(e) => {
 }
 )
 
+document.addEventListener('DOMContentLoaded', (event)=>{
+  var button = document.getElementById('tagbutton');
+  button.click();
+});
+
 input.focus();

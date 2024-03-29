@@ -43,8 +43,18 @@ class Features {
         }
         :{}
 
-        this.query=this.query.find({ $and: [{ CTC: { $gte: min } }, { ...title }, { ...Location }] });
-      
+        this.query = this.query.find({
+          $and: [
+            { 
+              $or: [ 
+                { CTC: { $exists: true, $gte: min } },
+                { Stipend: { $exists: true, $gte: min } }
+              ]
+            }, 
+            { ...title }, 
+            { ...Location }
+          ]
+        });
         return this;
     }
 

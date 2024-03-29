@@ -1,11 +1,14 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
-const passport = require('passport');
-const Job = require('./Job');
-const Internship = require('./Internship');
 const Schema = mongoose.Schema;
 
 const imageSchema = new Schema({
+    url : String,
+    filename : String
+})
+
+const resumeSchema = new Schema({
     url : String,
     filename : String
 })
@@ -23,6 +26,8 @@ const userSchema = new Schema({
     },
 
     images : [imageSchema],
+
+    resume : [resumeSchema],
 
     LastName: {
         type: String,
@@ -140,6 +145,6 @@ const userSchema = new Schema({
    
 });
 
-userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email'});
 
 module.exports = new mongoose.model('User', userSchema);

@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params : {
         folder : 'JobShala',
-        allowedFormats : ['jpeg', 'png', 'jpg']
+        allowedFormats : ['jpeg', 'png', 'jpg','pdf']
     }
 });
 

@@ -1,12 +1,13 @@
 const Internship = require('../db/Internship.js');
 const Features = require('../utils/features');
 const express = require('express');
+const User = require('../db/User.js');
 
 require('dotenv').config();
 
 module.exports.getAllInternships = (async (req, res, next) => {
     let resultperpage=4;
-    
+
     console.log("Query: ", req.query);
 
     let features=new Features(Internship.find(), req.query)
@@ -14,6 +15,7 @@ module.exports.getAllInternships = (async (req, res, next) => {
     .filter()
 
     let internships = await features.query;
+    console.log(internships)
 
     let sze=internships.length;
     
@@ -34,7 +36,7 @@ module.exports.getAllInternships = (async (req, res, next) => {
    
     res.render('internships/internships',{internships,page: currentPage, mxLength: sze});
 
-  })
+  });
 
 
 
@@ -76,11 +78,12 @@ module.exports.createinternship  = async (req,res,next) => {
     catch (err) {
        console.log(err); 
     }    
-}
+};
 
 module.exports.showInternship = async(req,res)=>{
     const {id} = req.params;
     const internship = await Internship.findById(id)
+    const user = req.user;
     // .populate({
     //     path : '',
     //     populate : {
@@ -92,7 +95,7 @@ module.exports.showInternship = async(req,res)=>{
         return res.redirect('/internships'); //Necessary to redirect
     }
     
-    res.render('internships/internshippage',{internship});
+    res.render('internships/internshippage',{internship,user});
 };
 
 module.exports.deleteInternship = async(req,res)=>{
@@ -120,6 +123,54 @@ module.exports.updateInternship = async(req,res)=>{
     req.flash('success','Successfully updated internship!')
     res.redirect(`/internships/${internship._id}`);
 };
+
+module.exports.Applyinternship = async (req,res,next) =>{
+    const user = await User.findById(req.user._id);
+    const Internshipfind = await Internship.findById(req.params.id);
+    for(var i = 0; i < user.Internshipapplication.length; i++)
+    {
+        // console.log(user.Internshipapplication[i].toString());
+        if(user.Internshipapplication[i]._id.toString() === req.params.id)
+        {
+            req.flash('error','You have already applied for this internship');
+            return res.redirect('/internships');
+        }
+    }
+    if(req.files.length > 0){
+        const resume = req.files[0];
+        const filename = req.files[0].originalname;
+        const url = req.files[0].path;
+        const newApplicant = {
+            user : user,
+            resume : {filename : filename, url : url}
+        }
+        Internshipfind.Applicants.push(newApplicant);      
+    }
+    else if(req.body.resume !== 'Select'){
+       const resumeDetails = req.body.resume;
+       const[filename,url] = resumeDetails.split('|');
+       const newApplicant = {
+           user : user,
+           resume : {filename : filename, url : url}
+        }
+       Internshipfind.Applicants.push(newApplicant); 
+    }
+    else{
+        const {id} = req.params;
+        const internship = await Internship.findById(id);
+        req.flash('error','Please choose or upload a resume');
+        return res.redirect(`/internships/${internship._id}`)
+    }
+    console.log(Internshipfind);
+    user.Internshipapplication.push(Internshipfind);
+    await user.save();
+    await Internshipfind.save();
+    // const ok = await user.populate('Internshipapplication');
+    // console.log(ok); 
+        req.flash('success','You have successfully applied for this internship'); 
+        res.redirect('/internships');
+ 
+}
 
 
 

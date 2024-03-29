@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const ejsmate = require('ejs-mate');
 const dotenv = require('dotenv');
-const cors = require('cors');
 const flash = require('connect-flash');
 
 const path = require('path');
@@ -26,6 +25,7 @@ const internshipRoute = require('./routes/internshiproute');
 const dashboardRoute = require('./routes/dashboardroute');
 const profileRoute = require('./routes/profileroute');
 
+mongoose.set('strictQuery', false);
 const dbUrl = process.env.CONNECTION_URL;
 mongoose.connect(dbUrl);
 
@@ -105,5 +105,5 @@ app.use('/profile', profileRoute);
 
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => { console.log(`server is running on : ${PORT}`) })

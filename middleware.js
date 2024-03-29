@@ -1,5 +1,4 @@
 const Job = require('./db/Job');
-const User = require('./db/User');
 const Internship = require('./db/Internship');
 const ExpressError = require('./utils/ExpressError');
 const {jobSchema, internshipSchema} = require('./schemas.js')

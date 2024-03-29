@@ -10,7 +10,7 @@ const upload = multer({ storage })
 
 router.get('/:id/edit', isLoggedIn, isStudent, catchAsync(users.renderProfilePage));
 router.route('/:id')
-.put(isLoggedIn, isStudent, upload.array('image'), catchAsync(users.updateProfile))
+.put(isLoggedIn, isStudent, upload.fields([{ name: 'image', maxCount: 1 }, { name: 'resume', maxCount: 1 }]), catchAsync(users.updateProfile))
 
 
 // router.get('/studentdashboard',isLoggedIn, async (req, res) => {    

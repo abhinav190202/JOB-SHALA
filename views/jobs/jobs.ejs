@@ -45,7 +45,7 @@
                     </form>
                     <div class="mt-3">
                         <form action=" /jobs" method="get" id='myForm2'>
-                            <label for="customRange2" class="text-center form-label">Desired minimum monthly stipend
+                            <label for="customRange2" class="text-center form-label">Desired CTC
                                 (₹)</label>
                             <input name='mi' type="range" id="myRange" class="form-range" min="0" max="100000"
                                 id="customRange2" step=1000 value='<%= query.mi %>'>
@@ -78,10 +78,11 @@
                                 <form class="d-inline" action="/jobs/<%=jobs[i]._id%>?_method=DELETE" method="POST">
                                     <a class="card-link btn btn-info me-3" href="/jobs/<%=jobs[i]._id%>/edit">Edit</a>
                                     <button class="btn btn-danger">
-                                        DELETE
+                                        Delete
                                     </button>
                                 </form>
                                 <% } %>
+
                         </div>
                         <h6 class="card-subtitle mb-4 text-muted">
                             <%=jobs[i].Company%>

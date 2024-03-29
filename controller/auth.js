@@ -7,6 +7,9 @@ const passport = require('passport');
 const { nanoid }=require('nanoid');
 const nodemailer=require('nodemailer');
 const {cloudinary} = require('../cloudinary')
+
+const genders = ['Male','Female','Other'];
+
 const transporter=nodemailer.createTransport(
     {
         service: 'gmail',
@@ -29,7 +32,8 @@ const transporter=nodemailer.createTransport(
             return;
         }
         req.flash('success', 'Welcome Back!');
-        res.redirect('/');
+        console.log(req.session.returnTo)
+        res.redirect(req.session.returnTo || '/');
         
     }
     
@@ -92,10 +96,14 @@ const transporter=nodemailer.createTransport(
                     Graduation : req.body.Graduation
                 }
                 );
+                console.log('yo')
                 console.log(req.session);
                 
-                if ((Number)(req.session.code)==(Number)(req.body.code)) {
+                if (parseInt(req.session.code, 10) === parseInt(req.body.code, 10)) {
+                    console.log('nice');
+                    console.log(user)
                     user=await User.register(user, req.body.password);
+                    console.log('nice1');
                     req.logIn(user, (err) => {
                         if (err) {
                             console.log(err);
@@ -140,7 +148,7 @@ const transporter=nodemailer.createTransport(
                     const registerEmail={
                         from: process.env.email,
                         to: req.body.email,
-                        subject: "Email Verfication",
+                        subject: "Email Verification",
                         text: `
                         CODE: ${token}
                         If you did not request this, please ignore this email.
@@ -175,18 +183,27 @@ const transporter=nodemailer.createTransport(
                     req.flash('error','Cannot find that user!');
                     return res.redirect('/'); //Necessary to redirect
                 }
-                res.render('profile/student',{user});
+                res.render('profile/student',{user,genders});
             };
             
             module.exports.updateProfile = async(req,res)=>{
                 const {id} = req.params;
                 console.log(req.body);
                 const user = await User.findByIdAndUpdate(id,{...req.body},{new:true});
-                const imgs = req.files.map(f=>({url : f.path, filename : f.filename}));
-                user.images.push(...imgs);
-                console.log(user.images);
-                // const imgs = req.files.map(f=>({url : f.path, filename : f.filename}));
-                // user.images.push(...imgs);
+                // console.log('meow')
+                // console.log(req.files)
+                if (req.files['image']) {
+                    const imageFiles = req.files['image'].map(file => ({ url: file.path, filename: file.filename }));
+                    user.images.push(...imageFiles);
+                }
+            
+                // Process uploaded resumes
+                if (req.files['resume']) {
+                    const originalname = req.files['resume'][0].originalname;
+                    const resumeFile = req.files['resume'][0]; // Assuming only one resume file is uploaded
+                    const resume = { url: resumeFile.path, filename: originalname };
+                    user.resume.push(resume);
+                }
                 await user.save();
                 req.flash('success','Successfully updated profile')
                 res.redirect('/');

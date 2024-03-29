@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
 
-    <script src="/js/city.js"></script>
+    <script src="/js/jobedit.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/jobform.css">
 
@@ -12,61 +12,59 @@
                 <div class="card">
 
                     <!-- <form class="form-card" onsubmit="event.preventDefault()"> -->
-                    <form class="form-card" id='formID' action="/internships" method='Post'>
+                    <form class="form-card" id='formID' action="/internships/<%=internship._id%>?_method=PUT" method='Post'>
 
                         <div class="row justify-content-between text-left">
                             <div class="form-group col-sm-6 flex-column d-flex"> <label
                                     class="form-control-label px-3">Business Email</label> <input type="text" id="email"
                                     name="email" placeholder="" value="<%=currentUser.email%> "> </div>
                             <div class="form-group col-sm-6 flex-column d-flex"> <label
-                                    class="form-control-label px-3">Phone Number</label> <input type="text" id="mob"
-                                    name="mob" placeholder=""> </div>
-                        </div>
-
-
-                        <div class="row justify-content">
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label
                                     class="form-control-label px-3">Internship Title</label> <input type="text" id="job"
                                     name="Name" placeholder="" value="<%=internship.Name%>"> </div>
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label
-                                    class="form-control-label px-3">Last Date to Apply</label> <input type="date"
-                                    id="desc" name="Lastdate" placeholder="Select a date"> </div>
                         </div>
 
 
                         <div class="row justify-content">
-                            <div>Location</div>
                             <div class="form-group col-sm-6 flex-column d-flex">
-
-                                <select onchange="print_city('state', this.selectedIndex);" id="sts" name="State"
-                                    class="form-control" required></select>
+                                <label class="form-control-label px-3">Start Date</label>
+                                <input type="date" id="desc" name="Startdate" placeholder="Select a date" value="<%=internship.Startdate%>">
                             </div>
+                            <div class="form-group col-sm-6 flex-column d-flex"> <label
+                                    class="form-control-label px-3">Last Date to Apply</label> <input type="date"
+                                    id="desc" name="Lastdate" placeholder="Select a date" value="<%=internship.Lastdate%>"> </div>
+                        </div>
+
+
+                        <div class="row justify-content mb-3">
+                            <div>Location</div>
+
+                            <input hidden type='text' id="statehidden" name="statehidden"
+                                value="<%=internship.State%>"></input>
+                            <input hidden type='text' id="cityhidden" name="cityhidden"
+                                value="<%=internship.Location%>"></input>
+
                             <div class="form-group col-sm-6 flex-column d-flex">
 
-                                <select id="state" class="form-control" required name="Location"></select>
+                                <select onclick="print_city('state', this.selectedIndex);" id="sts" name="State"
+                                    class="form-control" required>
+                                </select>
+                            </div>
+                            <div class=" form-group col-sm-6 flex-column d-flex">
+
+                                <select name="Location" id="state" class="form-control" value="<%=internship.Location%> "
+                                    required></select>
                                 <script language="javascript">print_state("sts");</script>
                             </div>
+
                         </div>
 
                         <div class="row justify-content-between text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex">
-                                <label class="form-control-label px-3">Start Date</label>
-                                <input type="date" id="desc" name="Startdate" placeholder="Select a date">
-                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex"> <label
+                                class="form-control-label px-3">Stipend(INR)</label> <input type="number" id="desc"
+                                name="Stipend" placeholder="" value="<%=internship.Stipend%>"> </div>
                             <div class="form-group col-sm-6 flex-column d-flex"> <label
                                     class="form-control-label px-3">Duration (in weeks)</label> <input type="number"
                                     id="desc" name="Duration" placeholder="" value="<%=internship.Duration%>"> </div>
-
-                        </div>
-
-                        <div class="row justify-content-between text-left">
-
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label
-                                    class="form-control-label px-3">Stipend(INR)</label> <input type="number" id="desc"
-                                    name="Stipend" placeholder="" value="<%=internship.Stipend%>"> </div>
-
-
-
 
                         </div>
                         <div class="form-group flex-column d-flex text-center skillcss">

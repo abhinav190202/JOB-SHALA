@@ -80,6 +80,10 @@
                                                                             class="form-control" name="Other"
                                                                             value="<%=user.Other%> "></div>
                                                                     <% } %><br>
+                                                                    <div class="mb-3 custom-file">
+                                                                        <label for="resume" class="labels">Upload Resume (pdf file)</label>
+                                                                        <input class="form-control" type="file" id="resume" name="resume" accept="application/pdf">
+                                                                    </div>
                     </div>
                     <div class="col-md-5 border-right mt-5">
                         <div class="p-3 py-4">
@@ -94,10 +98,15 @@
                                     <select list="genders" class="form-control" id="gender" name="Gender"
                                         value="<%=user.Gender%> ">
                                         <datalist id="genders">
-                                            <option value="select">Select Gender</option>
-                                            <option value="male">Male</option>
+                                            <!-- <option value="select">Select Gender</option>
+                                            <option value="male" >Male</option>
                                             <option value="female">Female</option>
-                                            <option value="other">Other</option>
+                                            <option value="other">Other</option> -->
+                                            <% for(let gender of genders) { %>
+                                                <option value="<%=gender%>" <%=user.Gender===gender ? 'selected' : '' %>>
+                                                    <%= gender %>
+                                                </option>
+                                                <% } %>
                                         </datalist>
                                     </select>
                                 </div>
@@ -148,6 +157,7 @@
                                 </div>
 
                                 <button type="button" id="tagbutton" class="btn btn-primary">Add</button>
+                                
 
                             </div>
                             <div class="row mt-3">
@@ -172,10 +182,19 @@
                                         class="form-control" name="Address" placeholder="Enter your Address"
                                         value="<%=user.Address%>">
                                 </div>
-                                <div class="col-md-12"><label class="labels">PIN Code</label><input type="number"
+                                <div class="col-md-12 mb-3"><label class="labels">PIN Code</label><input type="number"
                                         class="form-control" name="Pincode" placeholder="Enter PIN Code"
                                         value="<%=user.Pincode%>">
                                 </div>
+                                <div class="col-md-12"><label class="labels">View Uploaded Resume</label>
+                                    <ul>
+                                           <% for(let i = 0; i < user.resume.length; i++){%>
+                                            <li>
+                                                <a href="<%=user.resume[i].url%>"><%=user.resume[i].filename%></a>
+                                            </li>
+                                            <% } %>
+                                    </ul>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -189,5 +208,4 @@
     </body>
 
     <script src="/js/profileEdit.js"></script>
-
     </html>

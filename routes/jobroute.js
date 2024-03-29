@@ -4,6 +4,9 @@ const {createjob, getAllJobs, showJob, deleteJob, updateJob, renderEditForm, App
 const catchAsync = require('../utils/catchAsync');
 const {isLoggedIn, isEmployer, validateJob, isJobOwner} = require('../middleware')
 const Job = require('../db/Job.js');
+const multer  = require('multer')
+const {storage} = require('../cloudinary')
+const upload = multer({ storage })
 
 
 router.route('/')
@@ -18,7 +21,7 @@ router.route('/:id')
     .get(catchAsync(showJob))
     .put(isLoggedIn, isJobOwner, validateJob, catchAsync(updateJob))
     .delete(isLoggedIn, catchAsync(deleteJob))
-    .post(isLoggedIn,catchAsync(Applyjob));
+    .post(isLoggedIn,upload.array('resume'),catchAsync(Applyjob));
 
     
 router.get('/:id/edit', isLoggedIn, isJobOwner, catchAsync(renderEditForm));

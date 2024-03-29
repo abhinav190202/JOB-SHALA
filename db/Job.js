@@ -2,6 +2,20 @@ const mongoose = require('mongoose');
 const User = require('./User.js');
 
 
+const applicantSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    resume: {
+        type: {
+            url: String,
+            filename: String
+        },
+        required: true // Ensure the 'resume' field is required for each applicant
+    }
+});
+
 const jobSchema = mongoose.Schema({
 
     Name : {
@@ -51,16 +65,15 @@ const jobSchema = mongoose.Schema({
         ref : 'User',
     },
 
-    Applicants : [
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'User'
-        }
-    ],
+    Applicants : [applicantSchema],
     
     skills : {
         type : String,
         required : false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

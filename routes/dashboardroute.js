@@ -11,7 +11,7 @@ router.get('/employerdashboard', isLoggedIn, (req, res) => {
 
 router.get('/studentdashboard',isLoggedIn, async (req, res) => {    
     const user = await User.findById(req.user._id).populate('Jobapplication');
-    
+    console.log(user.Jobapplication)
     res.render('dashboard/studentdashboard',{jobApplications : user.Jobapplication});
 })
 
