@@ -42,8 +42,14 @@
 									<input hidden name="email" type="text" id="email" value = "<%= curUser.email %>">
 							        <input hidden name="FirstName" type="text" id="FirstName" value = "<%= curUser.FirstName %>">
 									<input hidden name="LastName" type="text" id="LastName" value = "<%= curUser.LastName %>">
+									<% if(curUser.College !== undefined) {%>
 									<input hidden name="College" type="text" id="College" value = "<%= curUser.College %>">
 									<input hidden name="Graduation" type="text" id="Graduation" value = "<%= curUser.Graduation %>">
+									<%} else {%>
+									<input hidden name="Company" type="text" id="Company" value = "<%=curUser.Company%>">
+									<input hidden name="role" type="text" id="role" value = "<%= curUser.role%>">
+									<input hidden name="about" type="text" id="about" value = "<%= curUser.about%>">
+									<% } %>
 									<input hidden name="password" type="text" id="password" value = "<%= curUser.password %>">
 									<div class="form-group last mb-4">
 											<label for="password">Code</label>

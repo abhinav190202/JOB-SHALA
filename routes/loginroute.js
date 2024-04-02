@@ -23,8 +23,8 @@ router.route('/verify')
 .post(login.verify);
 
 
-router.post('/registeremployer',login.registeremployer);
-router.post('/registerstudent',login.registerstudent);
+router.post('/registeremployer',login.register);
+router.post('/registerstudent',login.register);
 
 router.get('/logout',login.logout);
 

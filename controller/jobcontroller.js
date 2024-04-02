@@ -22,7 +22,8 @@ module.exports.createjob  = async (req,res,next) => {
             Employer : req.user,
             State : req.body.State,
             Location : req.body.Location,
-            role : "job"
+            role : "job",
+            about : req.user.about
         });
 
         console.log(req.user);

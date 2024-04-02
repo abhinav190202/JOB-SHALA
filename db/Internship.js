@@ -73,6 +73,10 @@ const InternshipSchema = mongoose.Schema({
         type :String,
         required : false,
     },
+    about : {
+        type : String,
+        required : false
+    }
 });
 
 

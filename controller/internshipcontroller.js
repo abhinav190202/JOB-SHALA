@@ -57,6 +57,7 @@ module.exports.createinternship  = async (req,res,next) => {
             // Employer : req.user
             State : req.body.State,
             Location : req.body.Location,
+            about : req.user.about
         });
         
         internship.Employer = req.user._id;

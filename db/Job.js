@@ -74,6 +74,10 @@ const jobSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    about : {
+        type : String,
+        required : false
     }
 });
 

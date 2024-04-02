@@ -140,9 +140,11 @@ const userSchema = new Schema({
     Pincode : {
         type : Number,
         default : null
+    },
+    about : {
+        type : String,
+        required : false
     }
-
-   
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email'});
