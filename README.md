@@ -10,8 +10,10 @@ Implemented Register and Login functionality for user with help of passport
 
 
 
-### 2. Apply for Jobs
-Student can apply for jobs.
+### 2. Apply for Jobs & Internships
+Student can apply for jobs and internships easily by just clicking the apply button. Users also have the choice of selecting already uploaded resumes or uploading a new resume.
+
+
 
 <img width="1437" alt="Screenshot 2022-09-24 at 1 56 15 AM" src="https://user-images.githubusercontent.com/82565121/192051286-9ea97d2b-379c-45e8-be45-7ad46bcc890f.png">
 
@@ -24,8 +26,8 @@ Students can search for specific Jobs and Internships according to their prefere
 
 
 
-### 4. Post Jobs
-Employer can post for a job opening.
+### 4. Post new Jobs & Internships
+Employers can post for a job or internship opening.
 
 <img width="1440" alt="Screenshot 2022-09-24 at 2 01 33 AM" src="https://user-images.githubusercontent.com/82565121/192052005-7abec4d1-f72a-4660-8417-d1e5c298b790.png">
 
