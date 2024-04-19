@@ -76,6 +76,10 @@ const InternshipSchema = mongoose.Schema({
     about : {
         type : String,
         required : false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

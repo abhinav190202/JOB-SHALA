@@ -24,3 +24,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.left{
+  margin-left: 3rem;
+}

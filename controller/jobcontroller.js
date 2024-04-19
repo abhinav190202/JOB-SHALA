@@ -8,8 +8,6 @@ require('dotenv').config();
 module.exports.createjob  = async (req,res,next) => {
   
     try {
-    
-        // console.log(req.body);
         const job = new Job({
             Name : req.body.Name,
             Descriptions : req.body.Descriptions,
@@ -25,17 +23,14 @@ module.exports.createjob  = async (req,res,next) => {
             role : "job",
             about : req.user.about
         });
-
-        console.log(req.user);
         job.Employer = req.user._id;
-    
         const isCreated = await job.save();
- 
-        console.log(job);
         res.redirect('/jobs');
         if(isCreated)
         {
-           console.log(isCreated);
+           const user = await User.findById(req.user._id);
+           user.createdJobs.push(job);
+           await user.save();
            res.redirect('/jobs');
            req.flash('success_msg','Job Created Successfully');
         }
@@ -64,7 +59,6 @@ module.exports.showJob = async(req,res)=>{
         req.flash('error','Cannot find that job!');
         return res.redirect('/jobs'); //Necessary to redirect
     }
-    console.log(req.user);
     res.render('jobs/jobpage',{job,user});
 };
 
@@ -87,7 +81,6 @@ module.exports.renderEditForm = async(req,res)=>{
 
 module.exports.updateJob = async(req,res)=>{
     const {id} = req.params;
-    console.log(req.body);
     const job = await Job.findByIdAndUpdate(id,{$set : req.body},{new:true});
     await job.save();
     req.flash('success','Successfully updated job!')
@@ -105,7 +98,6 @@ exports.getAllJobs = (async (req, res, next) => {
     .filter()
 
     let jobs = await features.query;
-    console.log(jobs)
 
     let sze=jobs.length;
     
@@ -134,7 +126,6 @@ exports.Applyjob = async (req,res,next) =>{
         const Jobfind = await Job.findById(req.params.id);
         for(var i = 0; i < user.Jobapplication.length; i++)
         {
-            // console.log(user.Jobapplication[i].toString());
             if(user.Jobapplication[i]._id.toString() === req.params.id)
             {
                 req.flash('error','You have already applied for this job');
@@ -149,7 +140,9 @@ exports.Applyjob = async (req,res,next) =>{
                 user : user,
                 resume : {filename : filename, url : url}
             }
-            Jobfind.Applicants.push(newApplicant);      
+            Jobfind.Applicants.push(newApplicant);  
+            const newResume = {url, filename};
+            user.resume.push(newResume);    
         }
         else if(req.body.resume !== 'Select'){
            const resumeDetails = req.body.resume;
@@ -158,7 +151,7 @@ exports.Applyjob = async (req,res,next) =>{
                user : user,
                resume : {filename : filename, url : url}
             }
-        Jobfind.Applicants.push(newApplicant); 
+            Jobfind.Applicants.push(newApplicant); 
         }
         else{
             const {id} = req.params;
@@ -166,12 +159,9 @@ exports.Applyjob = async (req,res,next) =>{
             req.flash('error','Please choose or upload a resume');
             return res.redirect(`/jobs/${job._id}`)
         }
-        console.log(Jobfind);
         user.Jobapplication.push(Jobfind);
         await user.save();
         await Jobfind.save();
-        // const ok = await user.populate('Jobapplication');
-        // console.log(ok); 
             req.flash('success','You have successfully applied for this job'); 
             res.redirect('/jobs');
      

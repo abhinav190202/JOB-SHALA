@@ -144,7 +144,15 @@ const userSchema = new Schema({
     about : {
         type : String,
         required : false
-    }
+    },
+    createdJobs: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Job'
+    }],
+    createdInternships: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Internship'
+    }]
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email'});
