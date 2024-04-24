@@ -62,28 +62,28 @@ a {
 img.w-100 {
   object-fit: fill;
   padding-bottom: 6px;
-  height: 25rem;
+  height: 31rem;
 }
 
 .image-slide {
-  height: 25rem;
+  height: 31rem;
   align-items: center;
   align-content: center;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 40px;
   padding: 0 1.8rem;
-  width: 92%;
+  width: 80%;
 }
 
 .carousel-inner {
-  height: 25rem;
+  height: 31rem;
 }
 
 .carousel-item {
   border: 3px solid #030303d0;
   box-sizing: border-box;
-  height: 25rem;
+  height: 31rem;
 }
 
 .internships {
@@ -93,6 +93,14 @@ img.w-100 {
 
 .mb-5 {
   margin-bottom: 1rem !important;
+}
+.head-img{
+  display: flex;
+  justify-content: center;
+}
+
+.head{
+  height: 8rem;
 }
 
 #secondary-heading {
