@@ -28,6 +28,19 @@ router.post('/registerstudent',login.register);
 
 router.get('/logout',login.logout);
 
+router.get('/forgot-password',(req,res)=>{
+   res.render('users/forgotpassword');
+});
+
+router.post('/forgot-password',login.forgotPassword);
+
+router.get('/reset-password/:token',(req,res)=>{
+    const {token} = req.params
+    res.render('users/resetpassword',{token})
+})
+
+router.post('/reset-password/:token',login.resetPassword);
+
 module.exports=router;
 
 

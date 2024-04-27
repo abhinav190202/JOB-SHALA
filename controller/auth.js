@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { nanoid }=require('nanoid');
 const nodemailer=require('nodemailer');
-const {cloudinary} = require('../cloudinary')
+const {cloudinary} = require('../cloudinary');
 
 const genders = ['Male','Female','Other'];
 
@@ -118,11 +118,12 @@ const transporter=nodemailer.createTransport(
             transporter.sendMail(registerEmail, (err, info) => {
                 if (err) {
                     console.log(err);
-                    res.send('Error While Sending Mail');
+                    req.flash('Error While Sending Mail');
+                    return res.redirect('/')
                 }
                 else {
                     console.log(info.response);
-                    // req.flash('success', 'Verification mail sent Successfully!');
+                    req.flash('success', 'Verification mail sent Successfully!');
                     res.render('users/verify', { curUser : req.body });
                 }
             })
@@ -131,9 +132,77 @@ const transporter=nodemailer.createTransport(
         catch (err) {
             console.log(err);
             req.flash('error', err.message);
-            res.redirect('/login');
+            return res.redirect('/login');
         }
         
+    }
+
+    module.exports.forgotPassword = async (req, res) => {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+    
+        if (!user) {
+            req.flash('error','Cannot find that user!');
+            return res.redirect('/forgot-password');
+        }
+    
+        // Generate reset token
+        const resetToken = crypto.randomBytes(20).toString('hex');
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 900000; // 15 mins
+    
+        await user.save();
+    
+        const baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000';
+
+        const resetPasswordLink = `${baseURL}/reset-password/${resetToken}`;
+
+        const mailOptions = {
+            from: process.env.email,
+            to: user.email,
+            subject: 'Password Reset',
+            text: `You are receiving this because you (or someone else) has requested the reset of the password for your Job Shala account.\n\n` +
+                `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+                `${resetPasswordLink}\n\n` +
+                `If you did not request this, please ignore this email and your password will remain unchanged. The link is valid for 15 mins\n`
+        };
+    
+        transporter.sendMail(mailOptions, (err,info) => {
+            if (err) {
+                console.log(err);
+                req.flash('Error While Sending Mail');
+                return res.redirect('/')
+            }
+            else {
+                console.log(info.response);
+                req.flash('success', 'Password Reset Link sent Successfully!');
+                return res.redirect('/login')
+            }
+        });
+    };
+
+    module.exports.resetPassword = async(req,res)=>{
+        const { password } = req.body;
+        const { token } = req.params;
+        const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } });
+       console.log(user)
+        if (!user) {
+            req.flash('error','Invalid or expired token!');
+            return res.redirect('/login');
+        }
+        try {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            user.setPassword(password,function(err,us){
+                user.save();
+            });
+            req.flash('success','Password Reset successfully');
+            return res.redirect('/login')
+        } 
+        catch (error) {
+            req.flash('error','Error Resetting Password');
+            return res.redirect('/login')
+        }
     }
     
     module.exports.renderProfilePage = async(req,res)=>{
