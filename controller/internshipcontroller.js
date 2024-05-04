@@ -44,7 +44,6 @@ module.exports.createinternship  = async (req,res,next) => {
 
     
     try {
-        console.log(req.body);
         const internship = new Internship({
             Name : req.body.Name,
             Descriptions : req.body.Descriptions,
@@ -62,12 +61,11 @@ module.exports.createinternship  = async (req,res,next) => {
         
         internship.Employer = req.user._id;
         const isCreated = await internship.save();
-
-        console.log(isCreated);
-        
         if(isCreated)
         {
-           console.log(isCreated);
+           const user = await User.findById(req.user._id);
+           user.createdInternships.push(internship);
+           await user.save();
            res.redirect('/internships');
            req.flash('success_msg','Internship Created Successfully');
         }
@@ -118,7 +116,6 @@ module.exports.renderEditForm = async(req,res)=>{
 
 module.exports.updateInternship = async(req,res)=>{
     const {id} = req.params;
-    console.log(req.body);
     const internship = await Internship.findByIdAndUpdate(id,{$set : req.body},{new:true});
     await internship.save();
     req.flash('success','Successfully updated internship!')
@@ -130,7 +127,6 @@ module.exports.Applyinternship = async (req,res,next) =>{
     const Internshipfind = await Internship.findById(req.params.id);
     for(var i = 0; i < user.Internshipapplication.length; i++)
     {
-        // console.log(user.Internshipapplication[i].toString());
         if(user.Internshipapplication[i]._id.toString() === req.params.id)
         {
             req.flash('error','You have already applied for this internship');
@@ -162,12 +158,9 @@ module.exports.Applyinternship = async (req,res,next) =>{
         req.flash('error','Please choose or upload a resume');
         return res.redirect(`/internships/${internship._id}`)
     }
-    console.log(Internshipfind);
     user.Internshipapplication.push(Internshipfind);
     await user.save();
     await Internshipfind.save();
-    // const ok = await user.populate('Internshipapplication');
-    // console.log(ok); 
         req.flash('success','You have successfully applied for this internship'); 
         res.redirect('/internships');
  

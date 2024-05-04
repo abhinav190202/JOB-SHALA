@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/applicantprofile.css">
+
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Job Applicants</title>
+
+    <meta name="author" content="Codeconvey" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css'>
+
+    
+    
+	    <link rel="stylesheet" href="/css/applicantprofile1.css">
+</head>
+<body>
+		
+  <div class="site-mobile-menu">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close mt-3">
+        <span class="icon-close2 js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
+  
+
+
+
+
+  <script src="/js/jquery-3.3.1.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/jquery.sticky.js"></script>
+  <script src="/js/main1.js"></script>
+<br><br><br>
+<header class="ScriptHeader">
+    <div class="rt-container">
+    	<div class="col-rt-12">
+        	<div class="rt-heading">
+            	<h1><center>Candidate Profile</center> </h1>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="rt-container">
+          <div class="col-rt-12">
+              <div class="Scriptcontent">
+<br><br>
+<!-- Student Profile -->
+<div class="student-profile py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent text-center">
+              <%if(user.images.length > 0) { %>
+            <img class="profile_img" src="<%=user.images[0].url%>" alt="student dp">
+            <% } else {%>
+                <img class="profile_img" src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="student dp">
+            <% } %>
+            <h3><%=user.FirstName%> <%=user.LastName%></h3>
+          </div>
+          <div class="card-body">
+            <p class="mb-0"><strong class="pr-1">Email</strong><%=user.email%></p>
+            <p class="mb-0"><strong class="pr-1">Contact No.:</strong><%=user.Mobile%></p>
+            <p class="mb-0"><strong class="pr-1">State:</strong><%=user.State%></p>
+            <p class="mb-0"><strong class="pr-1">City:</strong><%=user.City%></p>
+            <p class="mb-0"><strong class="pr-1">Address:</strong><%=user.Address%></p>
+
+            <div class="back">
+            <p class="mb-0"><strong class="pr-1"></strong></strong><a href="/" class="app-content-headerButton hide" id="goBackLink">Back to Applicants page</a></p>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+          </div>
+          <div class="card-body pt-0">
+            <table class="table table-bordered">
+              <tr>
+                <th width="30%">Date of Birth	</th>
+                <td width="2%">:</td>
+                <td><%=user.Dateofbirth%></td>
+              </tr>
+              <tr>
+                <th width="30%">Gender</th>
+                <td width="2%">:</td>
+                <td><%=user.Gender%></td>
+              </tr>
+
+              <tr>
+                <th width="30%">LinkedIn</th>
+                <td width="2%">:</td>
+                <td><%=user.Linkedin%></td>
+              </tr>
+              <tr>
+                <th width="30%">Github</th>
+                <td width="2%">:</td>
+                <td><%=user.Github%></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+
+        
+          <div style="height: 26px"></div>
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Academic Information</h3>
+          </div>
+          <div class="card-body pt-0">
+            <table class="table table-bordered">
+              <tr>
+                <th width="30%">College</th>
+                <td width="2%">:</td>
+                <td><%=user.College%></td>
+              </tr>
+              <tr>
+                <th width="30%">Graduation Year	</th>
+                <td width="2%">:</td>
+                <td><%=user.Graduation%></td>
+              </tr>
+              <tr>
+                <th width="30%">Field</th>
+                <td width="2%">:</td>
+                <td><%=user.Field%></td>
+              </tr>
+              <tr>
+                <th width="30%">Degree</th>
+                <td width="2%">:</td>
+                <td><%=user.Degree%></td>
+              </tr>
+              <tr>
+                <th width="30%">Expertise</th>
+                <td width="2%">:</td>
+                <td><%=user.Expertise%></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+           
+    		</div>
+		</div>
+    </div>
+</section>
+     
+
+
+    <!-- Analytics -->
+<script src="/js/try.js"></script>
+	</body>
+</html>

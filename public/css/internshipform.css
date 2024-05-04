@@ -15,7 +15,7 @@ body {
   /* background-image: url(pexels-craig-adderley-1563356.jpg); */
   /* background-image: url(red-black-brush-stroke-banner-background-perfect-canva.jpg);
     background-image: url(51363.jpg); */
-  background-image: url(/images/pexels-lumn-167699.jpg);
+  background-image: url(../images/3063545.webp);
   /* background-image: linear-gradient(to right, #16345f, #00527b, #007190, #00909c, #3daea1);  */
   /* background-color: ; */
   background-repeat: no-repeat;
@@ -47,7 +47,7 @@ h2 {
   height: 800px;
   opacity: 90%;
   margin-bottom: 20px;
-  box-shadow: 5px 16px 22px 0 rgba(0, 0, 0, 0.324);
+  box-shadow: 1px 5px 10px 1px #51a5c6;
 }
 
 .blue-text {
