@@ -96,15 +96,7 @@
                         <span class="cell-label"><%=createdJobs[i].Name%></span>
                     </div>
                     <div class="product-cell location"><span class="cell-label"><%=createdJobs[i].Location%>, <%=createdJobs[i].State%></span></div>
-                    <div class="product-cell posted"><span class="cell-label"><%=createdJobs[i].createdAt.toLocaleString('en-US', { 
-                        timeZone: 'IST',
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });%></span></div>
+                    <div class="product-cell posted"><span class="cell-label"><%=createdJobs[i].createdAt%></span></div>
                     <div class="product-cell applied"><span class="cell-label"><%=createdJobs[i].Applicants.length%></span></div>
                 </div>
             </a>
@@ -132,15 +124,7 @@
                         <span class="cell-label"><%=createdInternships[i].Name%></span>
                     </div>
                     <div class="product-cell location"><span class="cell-label"><%=createdInternships[i].Location%>, <%=createdInternships[i].State%></span></div>
-                    <div class="product-cell posted"><span class="cell-label"><%=createdInternships[i].createdAt.toLocaleString('en-US', { 
-                        timeZone: 'IST',
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });%></span></div>
+                    <div class="product-cell posted"><span class="cell-label"><%=createdInternships[i].createdAt%></span></div>
                     <div class="product-cell applied"><span class="cell-label"><%=createdInternships[i].Applicants.length%></span></div>
                 </div>
             </a>

@@ -4,6 +4,7 @@ const User = require('../db/User');
 const localStrat = require('passport-local');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const crypto = require('crypto')
 const { nanoid }=require('nanoid');
 const nodemailer=require('nodemailer');
 const {cloudinary} = require('../cloudinary');

@@ -68,15 +68,7 @@
                     <div class="product-cell role"><span class="cell-label">
                             <%= jobApplications[i].Name%>
                         </span></div>
-                    <div class="product-cell date"><span class="cell-label"><%=jobApplications[i].createdAt.toLocaleString('en-US', { 
-                        timeZone: 'IST',
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });%></span></div>
+                    <div class="product-cell date"><span class="cell-label"><%=jobApplications[i].createdAt%></span></div>
                     <div class="product-cell applicants"><span class="cell-label">
                             <%= jobApplications[i].Applicants.length %>
                         </span></div>
@@ -104,15 +96,7 @@
                         <div class="product-cell role"><span class="cell-label">
                                 <%= internshipApplications[i].Name%>
                             </span></div>
-                        <div class="product-cell date"><span class="cell-label"><%=internshipApplications[i].createdAt.toLocaleString('en-US', { 
-                            timeZone: 'IST',
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit'
-                        });%></span></div>
+                        <div class="product-cell date"><span class="cell-label"><%=internshipApplications[i].createdAt%></span></div>
                         <div class="product-cell applicants"><span class="cell-label">
                                 <%= internshipApplications[i].Applicants.length %>
                             </span></div>
